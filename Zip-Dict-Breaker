@@ -1,0 +1,56 @@
+#Python 3.x
+while True:
+   ststr = (input('Input encoded text here: ').replace(" ", ""))
+   instr = (list(ststr))
+   with open('decoded.txt', 'a') as f:
+           print('\n', file=f, flush=True);
+           print (ststr, file=f, flush=True)
+   params = {"0":"00", "A":"01", "V":"0A", "G":"0B",
+             "B":"10", "1":"11", "S":"1A", "H":"1B",
+             "7":"A0", "Q":"A1", "?":"AA", "2":"AB",
+             "P":"B0", "3":"B1", "D":"BA", "Y":"BB"}
+   s1 = []
+   for char in instr:
+      s1.append(params[char])
+   h1 = []
+   for item in s1:
+      h1.append(item[0])
+   h2 = []
+   for item in s1:
+      h2.append(item[1])
+   ha1 = str(h1)
+   ha2 = str(h2)
+   haf1 = str(ha1.replace("[", "").replace("]", "").replace("'", "").replace(" ", "").replace(",", ""))
+   haf2 = str(ha2.replace("[", "").replace("]", "").replace("'", "").replace(" ", "").replace(",", ""))
+   Un1 = (haf1 + haf2)
+   unbin = []
+   for char in Un1:
+      unbin.append(params[char])
+   k1 = []
+   for item in unbin:
+      k1.append(item[0])
+   k2 = []
+   for item in unbin:
+      k2.append(item[1])
+   ka1 = str(k1)
+   ka2 = str(k2)
+   kaf1 = str(ka1.replace("[", "").replace("]", "").replace("'", "").replace(" ", "").replace(",", ""))
+   kaf2 = str(ka2.replace("[", "").replace("]", "").replace("'", "").replace(" ", "").replace(",", ""))
+   BIN = (kaf1 + kaf2)
+   FNL = int('0b' + BIN, 2)
+   finalstring = FNL.to_bytes((FNL.bit_length() + 7) // 8, 'big').decode()
+   print (finalstring)
+   with open('decoded.txt', 'a') as f:
+           print('\n', file=f, flush=True);
+           print(finalstring, file=f, flush=True)
+   while True:
+        answer = input('Run again? (y/n): ')
+        if answer in ('y', 'n'):
+            break
+        print ('Invalid input.')
+   if answer == 'y':
+        continue
+   else:
+        print ('Goodbye')
+        break
+
