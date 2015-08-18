@@ -1,0 +1,49 @@
+while True:
+    inputstr = input("Input: ")
+    with open("output.txt", "a") as f:
+        print('\n', file=f, flush=True);
+        print(inputstr, file=f, flush=True);
+        print('\n', file=f, flush=True)
+    print(inputstr)
+    stbin = ' '.join(format(ord(x), '08b') for x in inputstr)
+    mdbin = stbin.replace(" ","")
+    chcnt = len(mdbin)
+    bin1 = mdbin[:int((chcnt/2))]
+    bin2 = mdbin[int((chcnt/2)):]
+    def add(x, y): return x+y
+    zipbin = list(map(add, bin1, bin2))
+    params = {"00":"0", "01":"A", "0A":"V", "0B":"G",
+              "10":"B", "11":"1", "1A":"S", "1B":"H",
+              "A0":"7", "A1":"Q", "AA":"?", "AB":"2",
+              "B0":"P", "B1":"3", "BA":"D", "BB":"Y"}
+    s = []
+    for item in zipbin:
+        s.append(params[item])
+    pass1 = str(s)
+    strps = pass1.replace("[", "").replace("]", "").replace("'", "").replace(" ", "").replace(",", "")
+    chcnt2 = len(strps)
+    p2hf1 = strps[:int((chcnt2/2))]
+    p2hf2 = strps[int((chcnt2/2)):]
+    zipp2 = list(map(add, p2hf1, p2hf2))
+    pass2 = []
+    for item in zipp2:
+        pass2.append(params[item])
+    sfstr = str(pass2)
+    final = str(sfstr.replace("[", "").replace("]", "").replace("'", "").replace(" ", "").replace(",", ""))
+    with open("output.txt", "a") as f:
+        print (final, file=f, flush=True);
+        print ('\n')
+    print (final)
+    print ('\n')
+    print ('Your results have been written to an output file in this program\'s path.')
+
+    while True:
+        answer = input('Run again? (y/n): ')
+        if answer in ('y', 'n'):
+            break
+        print ('Invalid input.')
+    if answer == 'y':
+        continue
+    else:
+        print ('Goodbye')
+        break
